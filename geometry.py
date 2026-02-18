@@ -1,66 +1,76 @@
-import logging
-import geopandas as gpd
-from shapely.geometry import shape, box
+"""
+geometry.py
+Handles AOI (Area of Interest) loading, point detection, buffering, and preparation for Planet API requests.
+Supports single/multiple AOIs, points, and polygons.
+"""
+
+from pathlib import Path
+from shapely.geometry import Point, Polygon, mapping
 from shapely.ops import unary_union
-from shapely.geometry.base import BaseGeometry
-from typing import List
+import geopandas as gpd
+from typing import List, Union
+import logging
+
+logger = logging.getLogger(__name__)
 
 
-def normalize_geometry(geom: BaseGeometry, point_buffer_deg: float) -> BaseGeometry:
+def load_aoi(paths: List[Union[str, Path]]) -> List[Polygon]:
     """
-    Convert Points/MultiPoints to buffered polygons.
+    Load AOIs from multiple GeoJSON files or single polygons.
+
+    Args:
+        paths (List[str | Path]): List of GeoJSON file paths
+
+    Returns:
+        List[Polygon]: List of polygons representing AOIs
     """
-
-    if geom.geom_type in ["Point", "MultiPoint"]:
-        logging.info(f"Buffering {geom.geom_type} to polygon")
-        return geom.buffer(point_buffer_deg)
-
-    if geom.geom_type in ["Polygon", "MultiPolygon"]:
-        return geom
-
-    raise ValueError(f"Unsupported geometry type: {geom.geom_type}")
-
-
-def load_aois(aoi_files: List[str], point_buffer_deg: float = 0.001) -> List[BaseGeometry]:
-    """
-    Load AOIs from GeoJSON files and normalize geometries.
-    """
-
-    geometries = []
-
-    for file in aoi_files:
-        gdf = gpd.read_file(file)
-
+    aois: List[Polygon] = []
+    for path in paths:
+        path = Path(path)
+        if not path.exists():
+            logger.error(f"AOI file not found: {path}")
+            raise FileNotFoundError(f"AOI file not found: {path}")
+        gdf = gpd.read_file(path)
         if gdf.empty:
-            raise ValueError(f"AOI file {file} is empty.")
-
+            logger.warning(f"AOI file is empty: {path}")
+            continue
         for geom in gdf.geometry:
-            geometries.append(normalize_geometry(geom, point_buffer_deg))
+            if isinstance(geom, (Polygon, Point)):
+                aois.append(geom)
+    if not aois:
+        raise ValueError("No valid AOIs loaded.")
+    return aois
 
-    logging.info(f"Loaded {len(geometries)} AOI geometries")
-    return geometries
 
-
-def generate_tiles(geometries: List[BaseGeometry], tile_size_deg: float):
+def buffer_points(points: List[Point], buffer_deg: float = 0.01) -> List[Polygon]:
     """
-    Generate bounding box grid tiles over AOI union.
+    Converts points into small polygons (buffers) for Planet requests.
+
+    Args:
+        points (List[Point]): List of shapely Point objects
+        buffer_deg (float): Buffer radius in degrees (default 0.01 ~1 km)
+
+    Returns:
+        List[Polygon]: Buffered polygons
     """
+    buffered = [pt.buffer(buffer_deg) for pt in points]
+    logger.info(f"Buffered {len(points)} points into polygons with {buffer_deg}° radius")
+    return buffered
 
-    union_geom = unary_union(geometries)
-    minx, miny, maxx, maxy = union_geom.bounds
 
-    tiles = []
-    x = minx
-    while x < maxx:
-        y = miny
-        while y < maxy:
-            tiles.append(
-                box(x, y,
-                    min(x + tile_size_deg, maxx),
-                    min(y + tile_size_deg, maxy))
-            )
-            y += tile_size_deg
-        x += tile_size_deg
+def unify_aois(aois: List[Polygon]) -> Polygon:
+    """
+    Merge multiple AOIs into a single polygon if needed.
 
-    logging.info(f"Generated {len(tiles)} tiles")
-    return tiles
+    Args:
+        aois (List[Polygon]): List of polygons
+
+    Returns:
+        Polygon: Single merged polygon
+    """
+    merged = unary_union(aois)
+    if isinstance(merged, Polygon):
+        return merged
+    # If union returns MultiPolygon, pick convex hull
+    logger.warning("AOI union resulted in MultiPolygon; using convex hull")
+    return merged.convex_hull
