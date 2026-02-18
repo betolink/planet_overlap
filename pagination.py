@@ -116,7 +116,7 @@ def fetch_planet_data(
                 for s_start, s_end in date_slices:
                     # Call the Planet API here (simplified)
                     # response = session.get(..., params=
-                    #{geom: tile, dates: s_start->s_end})
+                    # {geom: tile, dates: s_start->s_end})
                     # Extract ids, geometries, properties
                     # For demonstration, we'll append mock data
                     ids.append(f"scene_{s_start.strftime('%Y%m%d')}")
