@@ -1,32 +1,36 @@
 [tool.poetry]
-name = "planet_overlap"
+name = "planet-overlap"                   # distribution name (dash ok)
 version = "1.0.0"
-description = "A Python package for querying, filtering, tiling, and analyzing Planet imagery datasets."
-authors = ["Your Name <you@example.com>"]
+description = "PlanetOverlap: AOI & temporal tiling pipeline for Planet imagery"
+authors = ["Brianna Lind <you@example.com>"]
 readme = "README.md"
 license = "MIT"
-homepage = "https://github.com/BriannaLind/PlanetOverlap"
-repository = "https://github.com/BriannaLind/PlanetOverlap"
-keywords = ["planet", "satellite", "geospatial", "imagery"]
+packages = [
+    { include = "planet_overlap" }        # <- tells Poetry where the Python package lives
+]
 
-# Compatible Python version
 [tool.poetry.dependencies]
 python = "^3.10"
-requests = "^2.31.0"
-numpy = "^1.26.0"
-pandas = "^2.1.1"
-geopandas = "1.1.2"
-shapely = "^2.1.1"
-fiona = "^1.9.4"
-pyproj = "^3.6.0"
+numpy = "^1.26"
+pandas = "^2.3"
+shapely = "^2.1"
+pyproj = "^3.7"
+fiona = "^1.10"
+geopandas = "^1.1.2"
+requests = "^2.32"
+click = "^8.3"
+tzdata = "^2025.3"
+python-dateutil = "^2.9"
+attrs = "^25.4"
+six = "^1.17"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.4.2"
-flake8 = "^7.1.0"
-black = "^24.3.0"
-memory-profiler = "0.61.0"
-autoflake = "^2.3.2"
+pytest = "^7.4"
+flake8 = "^7.3"
+autoflake = "^2.3"
+black = "^24.10"
+memory-profiler = "^0.61"
 
 [build-system]
-requires = ["poetry-core>=1.6.0"]
+requires = ["poetry-core>=1.5.0"]
 build-backend = "poetry.core.masonry.api"
