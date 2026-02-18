@@ -1,6 +1,7 @@
 """
 geometry.py
-Handles AOI (Area of Interest) loading, point detection, buffering, and preparation for Planet API requests.
+Handles AOI (Area of Interest) loading, point detection, buffering, 
+and preparation for Planet API requests.
 Supports single/multiple AOIs, points, and polygons.
 """
 
