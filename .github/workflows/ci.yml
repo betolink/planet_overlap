@@ -38,7 +38,7 @@ jobs:
       - name: Run linting
         run: |
           export PATH="$HOME/.local/bin:$PATH"
-          poetry run flake8 ./planet_overlap --max-line-length=100
+          poetry run flake8 "./**/*.py" --max-line-length=100
 
       # 6️⃣ Run tests
       - name: Run tests
