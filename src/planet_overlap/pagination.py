@@ -18,26 +18,30 @@ def tile_dates(
     start: datetime, end: datetime, is_point: bool = False
 ) -> List[Tuple[datetime, datetime]]:
     """Break a date range into smaller slices if it exceeds thresholds.
-    
+
     Args:
         start: Start datetime
         end: End datetime
         is_point: True if input is a point, False for polygons/AOIs
-    
+
     Returns:
         List of (start, end) tuples
     """
     total_days = (end - start).days + 1
     slices = []
 
-    threshold_days = POINT_DATE_THRESHOLD_DAYS if is_point else DATE_RANGE_THRESHOLD_DAYS
+    threshold_days = (
+        POINT_DATE_THRESHOLD_DAYS if is_point else DATE_RANGE_THRESHOLD_DAYS
+    )
     if total_days <= threshold_days:
         return [(start, end)]
 
     slice_length = min(threshold_days, total_days)
     current_start = start
     while current_start <= end:
-        current_end = min(current_start + timedelta(days=slice_length - 1), end)
+        current_end = min(
+            current_start + timedelta(days=slice_length - 1), end
+        )
         slices.append((current_start, current_end))
         current_start = current_end + timedelta(days=1)
 
@@ -59,12 +63,14 @@ def tile_aoi(geom: Union[Polygon, Point]) -> List[Polygon]:
     while lat < lat_max:
         lon = lon_min
         while lon < lon_max:
-            tile = Polygon([
-                (lon, lat),
-                (min(lon + 1, lon_max), lat),
-                (min(lon + 1, lon_max), min(lat + 1, lat_max)),
-                (lon, min(lat + 1, lat_max)),
-            ])
+            tile = Polygon(
+                [
+                    (lon, lat),
+                    (min(lon + 1, lon_max), lat),
+                    (min(lon + 1, lon_max), min(lat + 1, lat_max)),
+                    (lon, min(lat + 1, lat_max)),
+                ]
+            )
             tiles.append(tile.intersection(geom))
             lon += 1
         lat += 1
@@ -94,9 +100,8 @@ def fetch_planet_data(
                     # Mock data for demonstration
                     ids.append(f"scene_{s_start.strftime('%Y%m%d')}")
                     geometries.append(tile.__geo_interface__)
-                    properties.append({
-                        "cloud_cover": max_cloud,
-                        "sun_angle": min_sun_angle
-                    })
+                    properties.append(
+                        {"cloud_cover": max_cloud, "sun_angle": min_sun_angle}
+                    )
 
     return ids, geometries, properties
