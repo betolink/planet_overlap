@@ -17,7 +17,6 @@ logging.basicConfig(level=logging.INFO)
 )
 
 
-
 def prepare_filters(
     geojson_paths: List[str], date_ranges: List[Tuple[str, str]]
 ) -> dict:

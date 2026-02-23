@@ -1,9 +1,3 @@
-(
-    " geometry.py Handles AOI (Area of Interest) loading, point detection,"
-    "buffering, and preparation for Planet API requests. Supports single/multiple"
-    "AOIs, points, and polygons."
-)
-
 from pathlib import Path
 from shapely.geometry import Point, Polygon
 from shapely.ops import unary_union
@@ -12,6 +6,12 @@ from typing import List, Union
 import logging
 
 logger = logging.getLogger(__name__)
+
+(
+    " geometry.py Handles AOI (Area of Interest) loading, point detection,"
+    "buffering, and preparation for Planet API requests. Supports single/multiple"
+    "AOIs, points, and polygons."
+)
 
 
 def load_aoi(paths: List[Union[str, Path]]) -> List[Polygon]:
