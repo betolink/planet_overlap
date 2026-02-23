@@ -49,7 +49,8 @@ def tile_dates(
 
 
 def tile_aoi(geom: Union[Polygon, Point]) -> List[Polygon]:
-    """Split a polygon into ~1°x1° tiles if AOI is large. Points are returned as buffered polygons."""
+    """Split a polygon into ~1°x1° tiles if AOI is large.
+    Points are returned as buffered polygons."""
     if isinstance(geom, Point):
         return [geom.buffer(0.01)]
 
@@ -85,7 +86,8 @@ def fetch_planet_data(
     max_cloud: float = 0.5,
     min_sun_angle: float = 0.0,
 ):
-    """Main entry point to fetch Planet data, automatically tiling AOIs or temporal ranges."""
+    """Main entry point to fetch Planet data,
+    automatically tiling AOIs or temporal ranges."""
     ids, geometries, properties = [], [], []
 
     for geom in aois:

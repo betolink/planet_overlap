@@ -8,11 +8,16 @@ logging.basicConfig(level=logging.INFO)
 
 
 (
-    " client.py - Entry point for running Planet Overlap analysis.  This script: 1."
-    "Reads AOI GeoJSON files. 2. Applies filters (geometry, date, cloud cover, sun"
-    "angle). 3. Handles spatial and temporal tiling automatically. 4. Calls"
-    "pagination module to fetch imagery. 5. Calls analysis module to compute"
-    "overlaps and sun angles. 6. Stores output to configurable directory.  Supports"
+    " client.py - Entry point for running Planet "
+    " Overlap analysis.  This script: 1."
+    "Reads AOI GeoJSON files. 2. Applies filters "
+    "(geometry, date, cloud cover, sun"
+    "angle). 3. Handles spatial and temporal "
+    "tiling automatically. 4. Calls"
+    "pagination module to fetch imagery. 5. Calls "
+    "analysis module to compute"
+    "overlaps and sun angles. 6. Stores output to "
+    "configurable directory.  Supports"
     "multiple AOIs and multiple date ranges."
 )
 
@@ -21,8 +26,10 @@ def prepare_filters(
     geojson_paths: List[str], date_ranges: List[Tuple[str, str]]
 ) -> dict:
     (
-        " Build filters for multiple AOIs and date ranges.  Args: geojson_paths: List of"
-        "file paths to AOI geojsons. date_ranges: List of (start_date, end_date) tuples."
+        " Build filters for multiple AOIs and date ranges."
+        "Args: geojson_paths: List of"
+        "file paths to AOI geojsons. date_ranges: List of"
+        "(start_date, end_date) tuples."
         "Returns: Dictionary containing combined filters."
     )
     filters = build_filters(geojson_paths, date_ranges)
@@ -35,7 +42,8 @@ def prepare_filters(
 
 def load_aois(geojson_paths: List[str]):
     (
-        " Load AOIs from GeoJSON files.  Args: geojson_paths: List of AOI geojson paths."
+        " Load AOIs from GeoJSON files.  Args: "
+        "geojson_paths: List of AOI geojson paths."
         "Returns: List of AOI geometries."
     )
     aois = [load_aoi(path) for path in geojson_paths]
@@ -45,9 +53,12 @@ def load_aois(geojson_paths: List[str]):
 
 def run_client(geojson_paths: List[str], date_ranges: List[Tuple[str, str]]):
     (
-        " Full client workflow: load AOIs, prepare filters, and return filters + AOIs."
-        "Args: geojson_paths: List of AOI GeoJSON paths. date_ranges: List of"
-        "(start_date, end_date) tuples.  Returns: Tuple of (filters dict, list of AOI"
+        " Full client workflow: load AOIs, prepare "
+        "filters, and return filters + AOIs."
+        "Args: geojson_paths: List of AOI GeoJSON "
+        "paths. date_ranges: List of"
+        "(start_date, end_date) tuples.  Returns: "
+        "Tuple of (filters dict, list of AOI"
         "geometries)"
     )
     aois = load_aois(geojson_paths)

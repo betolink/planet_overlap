@@ -87,8 +87,10 @@ def calculate_intersections(
     area_threshold: float = 25.0,
 ) -> Tuple[np.ndarray, np.ndarray]:
     (
-        " Compute pairwise intersected areas and sun angle differences between polygons."
-        "Only compares polygons from the same instrument and different satellites."
+        " Compute pairwise intersected areas and sun angle "
+        " differences between polygons."
+        " Only compares polygons from the same instrument "
+        " and different satellites."
     )
     n = len(polygons)
     area_2d = np.zeros((n, n), dtype=np.float32)
