@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import List, Tuple, Dict, Any
 from shapely.geometry import Polygon, mapping
 
-
 (
     " filters.py Builds Planet API search filters dynamically for multiple AOIs,"
     "multiple date ranges, cloud cover, and sun angle thresholds."
