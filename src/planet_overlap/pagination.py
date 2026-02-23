@@ -39,9 +39,7 @@ def tile_dates(
     slice_length = min(threshold_days, total_days)
     current_start = start
     while current_start <= end:
-        current_end = min(
-            current_start + timedelta(days=slice_length - 1), end
-        )
+        current_end = min(current_start + timedelta(days=slice_length - 1), end)
         slices.append((current_start, current_end))
         current_start = current_end + timedelta(days=1)
 

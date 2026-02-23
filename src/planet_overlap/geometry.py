@@ -40,9 +40,7 @@ def load_aoi(paths: List[Union[str, Path]]) -> List[Polygon]:
     return aois
 
 
-def buffer_points(
-    points: List[Point], buffer_deg: float = 0.01
-) -> List[Polygon]:
+def buffer_points(points: List[Point], buffer_deg: float = 0.01) -> List[Polygon]:
     (
         "Converts points into small polygons (buffers) "
         "for Planet requests.  Args: "

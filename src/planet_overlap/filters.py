@@ -94,9 +94,7 @@ def build_filters(
     else:
         date_filter = {
             "type": "OrFilter",
-            "config": [
-                date_range_filter(start, end) for start, end in date_ranges
-            ],
+            "config": [date_range_filter(start, end) for start, end in date_ranges],
         }
 
     # Combine quality filters

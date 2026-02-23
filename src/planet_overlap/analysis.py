@@ -34,16 +34,10 @@ def compute_central_coordinates(
 ) -> Tuple[np.ndarray, np.ndarray]:
     """Compute central latitude and longitude for each polygon."""
     central_lon = np.array(
-        [
-            np.mean([pt[0] for pt in geom["coordinates"][0]])
-            for geom in geometries
-        ]
+        [np.mean([pt[0] for pt in geom["coordinates"][0]]) for geom in geometries]
     )
     central_lat = np.array(
-        [
-            np.mean([pt[1] for pt in geom["coordinates"][0]])
-            for geom in geometries
-        ]
+        [np.mean([pt[1] for pt in geom["coordinates"][0]]) for geom in geometries]
     )
     return central_lon, central_lat
 
@@ -166,9 +160,7 @@ def process_tiles(
             "central_lon": central_lon,
             "central_lat": central_lat,
             "local_times": local_times,
-            "max_sun_diff": [
-                sun_diff_2d[i, :].max() for i in range(len(polygons))
-            ],
+            "max_sun_diff": [sun_diff_2d[i, :].max() for i in range(len(polygons))],
         }
     )
     gdf.set_index("id", inplace=True)
