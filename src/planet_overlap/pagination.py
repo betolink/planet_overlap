@@ -17,17 +17,11 @@ def estimate_scene_count(days: int, avg_scenes_per_day: float = 1.0) -> int:
 def tile_dates(
     start: datetime, end: datetime, is_point: bool = False
 ) -> List[Tuple[datetime, datetime]]:
-    """
-    Break a date range into smaller slices if it exceeds thresholds.
-
-    Args:
-        start: start datetime
-        end: end datetime
-        is_point: True if the input is a point, False for polygons/AOIs
-
-    Returns:
-        List of (start, end) tuples
-    """
+    (
+    " Break a date range into smaller slices if it exceeds thresholds.  Args: start:"
+    "start datetime end: end datetime is_point: True if the input is a point, False"
+    "for polygons/AOIs  Returns: List of (start, end) tuples"
+)
     total_days = (end - start).days + 1
     slices = []
 
@@ -49,16 +43,11 @@ def tile_dates(
 
 
 def tile_aoi(geom: Union[Polygon, Point]) -> List[Polygon]:
-    """
-    Split a polygon into ~1°x1° tiles if AOI is large.
-    Points are returned as buffered polygons automatically.
-
-    Args:
-        geom: AOI polygon or point
-
-    Returns:
-        List of Polygons for API requests
-    """
+    (
+    " Split a polygon into ~1°x1° tiles if AOI is large. Points are returned as"
+    "buffered polygons automatically.  Args: geom: AOI polygon or point  Returns:"
+    "List of Polygons for API requests"
+)
     if isinstance(geom, Point):
         # buffer a small area around the point (~0.01 degrees)
         return [geom.buffer(0.01)]
@@ -96,13 +85,10 @@ def fetch_planet_data(
     max_cloud: float = 0.5,
     min_sun_angle: float = 0.0,
 ):
-    """
-    Main entry point to fetch Planet data, automatically tiling AOIs or temporal ranges
-    when thresholds are exceeded.
-
-    Returns:
-        ids, geometries, properties
-    """
+    (
+    " Main entry point to fetch Planet data, automatically tiling AOIs or temporal"
+    "ranges when thresholds are exceeded.  Returns: ids, geometries, properties"
+)
     ids, geometries, properties = [], [], []
 
     for geom in aois:
@@ -118,11 +104,12 @@ def fetch_planet_data(
                     # response = session.get(..., params=
                     # {geom: tile, dates: s_start->s_end})
                     # Extract ids, geometries, properties
-                    # For demonstration, we'll append mock data
-                    ids.append(f"scene_{s_start.strftime('%Y%m%d')}")
-                    geometries.append(tile.__geo_interface__)
-                    properties.append(
-                        {"cloud_cover": max_cloud, "sun_angle": min_sun_angle}
+                    # For demonstration, we(
+    "ll append mock data ids.append(f"scene_{s_start.strftime((
+    " )%Y%m%d')}("
+)) geometries.append(tile.__geo_interface__) properties.append( {(
+    " )cloud_cover"
+): max_cloud, "sun_angle": min_sun_angle}
                     )
 
     return ids, geometries, properties

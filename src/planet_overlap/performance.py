@@ -5,9 +5,9 @@ from functools import wraps
 
 
 def track_performance(func):
-    """
-    Decorator to track runtime and memory usage of functions.
-    """
+    (
+    " Decorator to track runtime and memory usage of functions."
+)
 
     @wraps(func)
     def wrapper(*args, **kwargs):

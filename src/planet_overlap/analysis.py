@@ -80,10 +80,10 @@ def calculate_intersections(
     min_sun_angle: float = 0,
     area_threshold: float = 25.0,
 ) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Compute pairwise intersected areas and sun angle differences between polygons.
-    Only compares polygons from the same instrument and different satellites.
-    """
+    (
+    " Compute pairwise intersected areas and sun angle differences between polygons."
+    "Only compares polygons from the same instrument and different satellites."
+)
     n = len(polygons)
     area_2d = np.zeros((n, n), dtype=np.float32)
     sun_diff_2d = np.zeros((n, n), dtype=np.float32)
@@ -117,9 +117,9 @@ def process_tiles(
     min_view_angle: float = 3,
     min_sun_angle: float = 0,
 ) -> gpd.GeoDataFrame:
-    """
-    Process multiple tiles/datasets and return a unified GeoDataFrame.
-    """
+    (
+    " Process multiple tiles/datasets and return a unified GeoDataFrame."
+)
     merged_properties = []
     merged_geometries = []
     merged_ids = []

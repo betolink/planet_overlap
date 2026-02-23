@@ -4,9 +4,9 @@ from datetime import datetime, timedelta
 def estimate_scene_count(
     start_date: str, end_date: str, max_cloud: float, scenes_per_day: float = 1.5
 ) -> int:
-    """
-    Estimate number of scenes before execution.
-    """
+    (
+    " Estimate number of scenes before execution."
+)
 
     days = (datetime.fromisoformat(end_date) - datetime.fromisoformat(start_date)).days
 
@@ -15,9 +15,9 @@ def estimate_scene_count(
 
 
 def generate_monthly_ranges(start_date: str, end_date: str):
-    """
-    Split date range into monthly windows.
-    """
+    (
+    " Split date range into monthly windows."
+)
 
     ranges = []
 

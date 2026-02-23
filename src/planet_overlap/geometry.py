@@ -1,9 +1,8 @@
-"""
-geometry.py
-Handles AOI (Area of Interest) loading, point detection, buffering,
-and preparation for Planet API requests.
-Supports single/multiple AOIs, points, and polygons.
-"""
+(
+    " geometry.py Handles AOI (Area of Interest) loading, point detection,"
+    "buffering, and preparation for Planet API requests. Supports single/multiple"
+    "AOIs, points, and polygons."
+)
 
 from pathlib import Path
 from shapely.geometry import Point, Polygon
@@ -16,15 +15,11 @@ logger = logging.getLogger(__name__)
 
 
 def load_aoi(paths: List[Union[str, Path]]) -> List[Polygon]:
-    """
-    Load AOIs from multiple GeoJSON files or single polygons.
-
-    Args:
-        paths (List[str | Path]): List of GeoJSON file paths
-
-    Returns:
-        List[Polygon]: List of polygons representing AOIs
-    """
+    (
+    " Load AOIs from multiple GeoJSON files or single polygons.  Args: paths"
+    "(List[str | Path]): List of GeoJSON file paths  Returns: List[Polygon]: List of"
+    "polygons representing AOIs"
+)
     aois: List[Polygon] = []
     for path in paths:
         path = Path(path)
@@ -44,16 +39,12 @@ def load_aoi(paths: List[Union[str, Path]]) -> List[Polygon]:
 
 
 def buffer_points(points: List[Point], buffer_deg: float = 0.01) -> List[Polygon]:
-    """
-    Converts points into small polygons (buffers) for Planet requests.
-
-    Args:
-        points (List[Point]): List of shapely Point objects
-        buffer_deg (float): Buffer radius in degrees (default 0.01 ~1 km)
-
-    Returns:
-        List[Polygon]: Buffered polygons
-    """
+    (
+    " Converts points into small polygons (buffers) for Planet requests.  Args:"
+    "points (List[Point]): List of shapely Point objects buffer_deg (float): Buffer"
+    "radius in degrees (default 0.01 ~1 km)  Returns: List[Polygon]: Buffered"
+    "polygons"
+)
     buffered = [pt.buffer(buffer_deg) for pt in points]
     logger.info(
         f"Buffered {len(points)} points into polygons with {buffer_deg}° radius"
@@ -62,15 +53,10 @@ def buffer_points(points: List[Point], buffer_deg: float = 0.01) -> List[Polygon
 
 
 def unify_aois(aois: List[Polygon]) -> Polygon:
-    """
-    Merge multiple AOIs into a single polygon if needed.
-
-    Args:
-        aois (List[Polygon]): List of polygons
-
-    Returns:
-        Polygon: Single merged polygon
-    """
+    (
+    " Merge multiple AOIs into a single polygon if needed.  Args: aois"
+    "(List[Polygon]): List of polygons  Returns: Polygon: Single merged polygon"
+)
     merged = unary_union(aois)
     if isinstance(merged, Polygon):
         return merged

@@ -3,9 +3,9 @@ import sys
 
 
 def setup_logger(log_file: str | None = None):
-    """
-    Configure logging for console and optional file output.
-    """
+    (
+    " Configure logging for console and optional file output."
+)
     handlers = [logging.StreamHandler(sys.stdout)]
 
     if log_file:
