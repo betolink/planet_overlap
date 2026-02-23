@@ -1,36 +1,55 @@
-[tool.poetry]
-name = "planet-overlap"                   # distribution name (dash ok)
-version = "1.0.0"
-description = "PlanetOverlap: AOI & temporal tiling pipeline for Planet imagery"
-authors = ["Brianna Lind <you@example.com>"]
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "planet_overlap"
+version = "0.1.0"
+description = "Tools for analyzing planetary overlap and spatial relationships."
 readme = "README.md"
-license = "MIT"
-packages = [
-    { include = "planet_overlap" }        # <- tells Poetry where the Python package lives
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Brianna Lind" }
+]
+keywords = ["geospatial", "planetary science", "overlap", "analysis"]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-numpy = "^1.26"
-pandas = "^2.3"
-shapely = "^2.1"
-pyproj = "^3.7"
-fiona = "^1.10"
-geopandas = "^1.1.2"
-requests = "^2.32"
-click = "^8.3"
-tzdata = "^2025.3"
-python-dateutil = "^2.9"
-attrs = "^25.4"
-six = "^1.17"
+dependencies = [
+    "numpy>=1.23",
+    # Add other runtime deps explicitly here
+]
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^7.4"
-flake8 = "^7.3"
-autoflake = "^2.3"
-black = "^24.10"
-memory-profiler = "^0.61"
+[project.optional-dependencies]
+dev = [
+    "pytest>=7",
+    "pytest-cov",
+    "flake8",
+    "black",
+    "mypy",
+]
 
-[build-system]
-requires = ["poetry-core>=1.5.0"]
-build-backend = "poetry.core.masonry.api"
+[project.urls]
+Homepage = "https://github.com/BriannaLind/planet_overlap"
+Repository = "https://github.com/BriannaLind/planet_overlap"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers --disable-warnings"
+testpaths = ["tests"]
