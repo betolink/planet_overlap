@@ -33,7 +33,7 @@ jobs:
 
       - name: Lint (flake8)
         run: |
-          flake8 src tests
+          flake8 src tests --max-line-length=88 --extend-ignore=E203,W503
 
       - name: Check formatting (black)
         run: |
