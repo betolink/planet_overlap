@@ -20,22 +20,23 @@ def prepare_filters(
     geojson_paths: List[str], date_ranges: List[Tuple[str, str]]
 ) -> dict:
     (
-    " Build filters for multiple AOIs and date ranges.  Args: geojson_paths: List of"
-    "file paths to AOI geojsons. date_ranges: List of (start_date, end_date) tuples."
-    "Returns: Dictionary containing combined filters."
-)
+        " Build filters for multiple AOIs and date ranges.  Args: geojson_paths: List of"
+        "file paths to AOI geojsons. date_ranges: List of (start_date, end_date) tuples."
+        "Returns: Dictionary containing combined filters."
+    )
     filters = build_filters(geojson_paths, date_ranges)
     logging.info(
-        "Filters prepared for %d AOIs/date ranges", len(filters.get("config", []))
+        "Filters prepared for %d AOIs/date ranges",
+        len(filters.get("config", [])),
     )
     return filters
 
 
 def load_aois(geojson_paths: List[str]):
     (
-    " Load AOIs from GeoJSON files.  Args: geojson_paths: List of AOI geojson paths."
-    "Returns: List of AOI geometries."
-)
+        " Load AOIs from GeoJSON files.  Args: geojson_paths: List of AOI geojson paths."
+        "Returns: List of AOI geometries."
+    )
     aois = [load_aoi(path) for path in geojson_paths]
     logging.info("Loaded %d AOIs", len(aois))
     return aois
@@ -43,11 +44,11 @@ def load_aois(geojson_paths: List[str]):
 
 def run_client(geojson_paths: List[str], date_ranges: List[Tuple[str, str]]):
     (
-    " Full client workflow: load AOIs, prepare filters, and return filters + AOIs."
-    "Args: geojson_paths: List of AOI GeoJSON paths. date_ranges: List of"
-    "(start_date, end_date) tuples.  Returns: Tuple of (filters dict, list of AOI"
-    "geometries)"
-)
+        " Full client workflow: load AOIs, prepare filters, and return filters + AOIs."
+        "Args: geojson_paths: List of AOI GeoJSON paths. date_ranges: List of"
+        "(start_date, end_date) tuples.  Returns: Tuple of (filters dict, list of AOI"
+        "geometries)"
+    )
     aois = load_aois(geojson_paths)
     filters = prepare_filters(geojson_paths, date_ranges)
     # Use filters downstream; previously 'combined_filter' was unused

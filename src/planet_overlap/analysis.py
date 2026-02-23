@@ -30,14 +30,20 @@ def filter_quality(
 
 
 def compute_central_coordinates(
-    geometries: List[Dict[str, Any]]
+    geometries: List[Dict[str, Any]],
 ) -> Tuple[np.ndarray, np.ndarray]:
     """Compute central latitude and longitude for each polygon."""
     central_lon = np.array(
-        [np.mean([pt[0] for pt in geom["coordinates"][0]]) for geom in geometries]
+        [
+            np.mean([pt[0] for pt in geom["coordinates"][0]])
+            for geom in geometries
+        ]
     )
     central_lat = np.array(
-        [np.mean([pt[1] for pt in geom["coordinates"][0]]) for geom in geometries]
+        [
+            np.mean([pt[1] for pt in geom["coordinates"][0]])
+            for geom in geometries
+        ]
     )
     return central_lon, central_lat
 
@@ -81,9 +87,9 @@ def calculate_intersections(
     area_threshold: float = 25.0,
 ) -> Tuple[np.ndarray, np.ndarray]:
     (
-    " Compute pairwise intersected areas and sun angle differences between polygons."
-    "Only compares polygons from the same instrument and different satellites."
-)
+        " Compute pairwise intersected areas and sun angle differences between polygons."
+        "Only compares polygons from the same instrument and different satellites."
+    )
     n = len(polygons)
     area_2d = np.zeros((n, n), dtype=np.float32)
     sun_diff_2d = np.zeros((n, n), dtype=np.float32)
@@ -117,9 +123,7 @@ def process_tiles(
     min_view_angle: float = 3,
     min_sun_angle: float = 0,
 ) -> gpd.GeoDataFrame:
-    (
-    " Process multiple tiles/datasets and return a unified GeoDataFrame."
-)
+    (" Process multiple tiles/datasets and return a unified GeoDataFrame.")
     merged_properties = []
     merged_geometries = []
     merged_ids = []
@@ -160,7 +164,9 @@ def process_tiles(
             "central_lon": central_lon,
             "central_lat": central_lat,
             "local_times": local_times,
-            "max_sun_diff": [sun_diff_2d[i, :].max() for i in range(len(polygons))],
+            "max_sun_diff": [
+                sun_diff_2d[i, :].max() for i in range(len(polygons))
+            ],
         }
     )
     gdf.set_index("id", inplace=True)
