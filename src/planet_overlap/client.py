@@ -1,3 +1,12 @@
+# client.py
+import logging
+from typing import List, Tuple
+from planet_overlap.filters import build_filters
+from planet_overlap.geometry import load_aoi
+
+logging.basicConfig(level=logging.INFO)
+
+
 (
     " client.py - Entry point for running Planet Overlap analysis.  This script: 1."
     "Reads AOI GeoJSON files. 2. Applies filters (geometry, date, cloud cover, sun"
@@ -7,13 +16,6 @@
     "multiple AOIs and multiple date ranges."
 )
 
-# client.py
-import logging
-from typing import List, Tuple
-from planet_overlap.filters import build_filters
-from planet_overlap.geometry import load_aoi
-
-logging.basicConfig(level=logging.INFO)
 
 
 def prepare_filters(
